@@ -4,6 +4,18 @@
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+		<script type="text/javascript" src="jsc3d/jsc3d.js"></script>
+		<script type="text/javascript" src="jsc3d/jsc3d.webgl.js"></script>
+		<script type="text/javascript" src="jsc3d/jsc3d.touch.js"></script>
+
+		<?php if (isset($_GET['msg'])){ ?>
+			<script>
+$(function(){
+	alert("<?php echo $_GET['msg']; ?>");
+});
+			</script>
+		<?php } ?>
 	</head>
 	<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -64,7 +76,10 @@
 				</div>
 				<div style="clear: both; "></div>
 			</section>
-			<hr>
+			<br>
+			<br>
+			<br>
+			<!--<hr>
 			<section class="container text-center">
 				<img src="img/3d_printer.png" style="float: left; width: 240px; ">
 				<div class="d-inline-block text-left">
@@ -74,8 +89,8 @@
 					それが、このサイトです。</p>
 				</div>
 				<div style="clear: both; "></div>
-			</section>
-			<hr>
+			</section>-->
+			<!--<hr>
 			<section class="container">
 				<h3>で、どうするの?</h3>
 				<p>3D プリンタを IoT 化するには多くの課題があります。<br>
@@ -96,28 +111,51 @@
 				造形物の大きさによっては受取拒否するかも……<br>
 				もしかしたら、<a href="https://twitter.com/bluehood_admin/">Twitter</a>でも受取報告させていただくかも。
 				</p>
-			</section>
+			</section>-->
 			<section class="container">
-<div class="jumbotron">
-  <h3 class="display-4"><span class="text-primary">〒</span>3D POST 投函口</h3>
-  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-  <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </p>
-</div>
+					<div class="jumbotron text-center">
+					<h3 class="display-4"><span class="text-primary">〒</span>3D POST 投函口</h3>
+					<form method="post" action="send.php" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="form-name">名前<small> (任意、ニックネームでもなんでも可)</small></label><br>
+							<input type="text" class="form-control d-inline" id="form-name" name="name" placeholder="グレたノコノコ" style="max-width: 320px; ">
+						</div>
+						<div class="form-group">
+							<label for="form-msg">メッセージ<small> (任意)</small></label><br>
+							<input type="text" class="form-control d-inline" id="form-msg" name="msg" placeholder="ミッミッ！　クワァ〜メミッミッ！　ポコンポコン♪　メェ〜〜……グワァ！！　ボコボコボコ……" style="max-width: 640px; ">
+						</div>
+						<div class="form-group">
+							<label for="form-3ddata">3D データ <small>(stl ファイル)</small></label><br>
+							<input required type="file" class="form-control-file d-inline" id="form-3ddata" name="3ddata" accept=".stl" style="max-width: 320px; ">
+							<!--<canvas id="3d-preview"></canvas>
+							<script>
+var viewer = new JSC3D.Viewer(document.getElementById('3d-preview'));
+        viewer.setParameter('SceneUrl',         'cube.obj');
+        viewer.setParameter('ModelColor',       '#CAA618');
+        viewer.setParameter('BackgroundColor1', '#E5D7BA');
+        viewer.setParameter('BackgroundColor2', '#383840');
+        viewer.setParameter('RenderMode',       'flat');
+        viewer.init();
+        viewer.update();
+							</script>-->
+						</div>
+						<div class="form-group">
+							<label for="form-privacy"><a href="#report">受取報告</a>をしてもよろしいですか？<br>お名前、メッセージ、3D 造形物を紹介するかもしれません。<small>(任意)</small></label>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" id="form-privacy" name="privacy">
+								<label class="form-check-label" for="form-privacy">はい</label>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">投函する</button>
+					</form>
+				</div>
 			</section>
-			<section class="container">
-<div class="jumbotron">
-  <h3 class="display-4">受取状況</h3>
-  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-  <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </p>
-</div>
+			<section class="container" id="report">
+				<div class="jumbotron text-center">
+					<h3 class="display-4">受取報告</h3>
+					いまのところ、受取はありません。<br>
+					投函待ってます！
+				</div>
 			</section>
 			<!--<section class="container">
 				<h4>開発後記</h4>
